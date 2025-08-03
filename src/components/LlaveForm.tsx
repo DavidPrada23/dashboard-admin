@@ -16,7 +16,7 @@ export default function LlaveForm({ modoRegistroInicial = false }: { modoRegistr
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setMensaje("Configuración guardada y comercio activado.");
-    } catch (err) {
+    } catch {
       setMensaje("Error al guardar la configuración.");
     }
   };

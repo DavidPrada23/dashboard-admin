@@ -20,7 +20,7 @@ export default function CambiarClavePage() {
       });
 
       setMensaje('Clave actualizada. Ya puedes usar tu nueva contraseña.');
-    } catch (err) {
+    } catch {
       setError('Error al actualizar la clave');
     }
   };

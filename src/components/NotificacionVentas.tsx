@@ -2,23 +2,36 @@ import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
+interface Venta {
+  producto: string;
+  monto: number;
+  // agrega aquí otros campos si es necesario
+}
+
 export default function NotificacionVentas() {
-  const [ventaNueva, setVentaNueva] = useState<any | null>(null);
+  const [ventaNueva, setVentaNueva] = useState<Venta | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
     // parsear el email del token
-    const parseJwt = (token: string): any => {
+    interface JwtPayload {
+      sub: string;
+      // agrega aquí otros campos si es necesario
+    }
+
+    const parseJwt = (token: string): JwtPayload | null => {
       try {
-        return JSON.parse(atob(token.split(".")[1]));
+        return JSON.parse(atob(token.split(".")[1])) as JwtPayload;
       } catch {
         return null;
       }
     };
 
-    const email = parseJwt(token).sub;
+    const jwtPayload = parseJwt(token);
+    if (!jwtPayload) return;
+    const email = jwtPayload.sub;
 
     const socket = new SockJS("http://localhost:8080/ws");
     const stompClient = new Client({

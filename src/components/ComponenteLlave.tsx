@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
-import ReactDOM from 'react-dom';
+
 import {QRCodeSVG} from 'qrcode.react';
 
 import axios from "../api/axios";

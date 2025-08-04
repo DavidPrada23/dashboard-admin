@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-//import styles from "./DashboardPage.module.css";
+import styles from "./DashboardPage.module.css";
 
 import FormularioVenta from "../components/FormularioVenta";
 import HistorialVentas from "../components/HistorialVentas";
@@ -44,7 +44,7 @@ export default function DashboardPage() {
   if (!usuario?.comercio?.activo) {
     // comercio aún inactivo
     return (
-      <div className="p-4">
+      <div className={styles.dashboardContainer}>
         <h2 className="text-xl font-bold mb-2">Completa tu configuración</h2>
         <p className="mb-4">Debes registrar tu llave de pago y correo bancario para activar tu comercio.</p>
         <LlaveForm modoRegistroInicial />
@@ -53,7 +53,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
+    <div className={styles.dashboardContainer}>
       <h1 className="text-2xl font-bold mb-4">Panel del Comercio</h1>
       <NotificacionVentas />
       <LlaveForm />

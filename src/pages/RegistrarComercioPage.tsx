@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+import styles from './RegistrarComercioPage.module.css';
+
 export default function RegistrarComercioPage() {
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
@@ -20,17 +22,17 @@ export default function RegistrarComercioPage() {
       setMensaje('¡Comercio registrado y correo enviado!');
       setEmail('');
       setNombre('');
-    } catch (err) {
+    } catch {
       setError('Error al registrar el comercio');
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 border rounded">
-      <h2 className="text-xl font-bold mb-4">Registrar nuevo comercio</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className={styles.registrarContainer}>
+      <h2 className={styles.title}>Registrar nuevo comercio</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input
-          className="w-full border p-2"
+          className={styles.input}
           type="text"
           placeholder="Nombre del comercio"
           value={nombre}
@@ -38,7 +40,7 @@ export default function RegistrarComercioPage() {
           required
         />
         <input
-          className="w-full border p-2"
+          className={styles.input}
           type="email"
           placeholder="Correo electrónico"
           value={email}

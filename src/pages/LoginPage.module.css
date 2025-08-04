@@ -5,6 +5,12 @@
     min-height: 100vh;
     background: linear-gradient(to right, #4caf50, #2e7d32);
   }
+  .logo {
+    display: block;
+    margin: 0 auto 1rem auto;
+    max-width: 120px;
+    height: auto;
+  }
   
   .card {
     background: white;
@@ -24,15 +30,18 @@
   }
   
   .input {
-    width: 100%;
+    width: 40%;
+    display: block;
     padding: 0.75rem;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
   }
   
   .button {
-    width: 100%;
+    width: 60%;
+    display: block;
+    margin: 0 auto;
     background-color: #4caf50;
     color: white;
     padding: 0.75rem;

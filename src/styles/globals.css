@@ -1,0 +1,20 @@
+:root {
+  --primary: #22a447;
+  --primary-hover: #1b8339;
+  --bg-light: #f8f9fa;
+  --text-dark: #222;
+  --error: #dc2626;
+  --radius: 8px;
+  --shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+button {
+  font-family: inherit;
+}

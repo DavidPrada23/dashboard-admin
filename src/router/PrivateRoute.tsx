@@ -1,16 +1,18 @@
-import { Navigate } from 'react-router-dom';
-import { JSX, ReactNode } from 'react';
+import React, { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 
-type Props = {
+interface PrivateRouteProps {
   children: ReactNode;
-};
+}
 
-export default function PrivateRoute({ children }: Props): JSX.Element {
-  const token = localStorage.getItem('token');
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const token = localStorage.getItem("token");
 
   if (!token) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;  // ← aquí el cambio importante
-}
+  return <>{children}</>;
+};
+
+export default PrivateRoute;

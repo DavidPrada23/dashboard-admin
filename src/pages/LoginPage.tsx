@@ -24,7 +24,7 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/logo.png" alt="PayB" className={styles.logo} />
+        <img src="/payb-logo.png" alt="PayB" className={styles.logo} />
         <h2 className={styles.title}>Iniciar sesión</h2>
 
         {error && <p className={styles.error}>{error}</p>}

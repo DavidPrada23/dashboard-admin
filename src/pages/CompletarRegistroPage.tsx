@@ -1,8 +1,8 @@
 import { useState } from "react";
-import api from "../api/axios"; // tu instancia con baseURL
+import api from "../api/axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styles from "./CambiarClavePage.module.css";
+import styles from "./CompletarRegistroPage.module.css";
 
 interface LoginResponseDTO {
   token: string;
@@ -10,45 +10,40 @@ interface LoginResponseDTO {
   comercioActivo: boolean;
 }
 
-export default function CambiarClavePage() {
-  const [nuevaClave, setNuevaClave] = useState<string>("");
-  const [confirmarClave, setConfirmarClave] = useState<string>("");
+export default function CompletarRegistroPage() {
+  const [correoBancario, setCorreoBancario] = useState<string>("");
+  const [llaveActual, setLlaveActual] = useState<string>("");
   const [mensaje, setMensaje] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMensaje("");
     setError("");
-
-    if (nuevaClave !== confirmarClave) {
-      setError("Las contraseñas no coinciden");
-      return;
-    }
+    setLoading(true);
 
     try {
       const token = localStorage.getItem("token") ?? "";
       const res = await api.post<LoginResponseDTO>(
-        "/auth/cambiar-clave",
-        { nuevaClave },
+        "/auth/completar-registro",
+        { correoBancario, llaveActual },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // guarda token si viene
+      // actualizar token si viene
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
 
-      setMensaje("Contraseña cambiada correctamente");
+      setMensaje("Registro completado correctamente ✅");
 
-      // redirección según flags recibidos
-      if (res.data.claveTemporal) {
-        // si backend aún marca que debe cambiar, quedarse o mostrar mensaje
-        setTimeout(() => navigate("/cambiar-clave"), 800);
-      } else if (!res.data.comercioActivo) {
-        setTimeout(() => navigate("/completar-registro"), 800);
+      // si comercio ya activo, ir al dashboard
+      if (res.data.comercioActivo) {
+        setTimeout(() => navigate("/dashboard"), 800);
       } else {
+        // fallback: refrescar página de completar o mostrar mensaje
         setTimeout(() => navigate("/dashboard"), 800);
       }
     } catch (err: unknown) {
@@ -59,33 +54,39 @@ export default function CambiarClavePage() {
       } else {
         setError("Error inesperado");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h2>Cambia tu contraseña</h2>
-        <p>Por seguridad, define una nueva contraseña antes de continuar.</p>
+        <h2>Completa tu configuración</h2>
+        <p>Ingresa tu llave de pago y el correo asociado a tu cuenta bancaria.</p>
 
         <form onSubmit={handleSubmit}>
-          <label>Nueva contraseña</label>
+          <label>Correo bancario</label>
           <input
-            type="password"
-            value={nuevaClave}
-            onChange={(e) => setNuevaClave(e.target.value)}
+            type="email"
+            value={correoBancario}
+            onChange={(e) => setCorreoBancario(e.target.value)}
             required
+            placeholder="ejemplo@banco.com"
           />
 
-          <label>Confirmar contraseña</label>
+          <label>Llave de pago</label>
           <input
-            type="password"
-            value={confirmarClave}
-            onChange={(e) => setConfirmarClave(e.target.value)}
+            type="text"
+            value={llaveActual}
+            onChange={(e) => setLlaveActual(e.target.value)}
             required
+            placeholder="Ingresa tu llave única"
           />
 
-          <button type="submit">Guardar nueva contraseña</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Guardando..." : "Completar registro"}
+          </button>
 
           {mensaje && <p className={styles.success}>{mensaje}</p>}
           {error && <p className={styles.error}>{error}</p>}

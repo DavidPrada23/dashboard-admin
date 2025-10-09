@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../api/axios";
 import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
-  const [correo, setCorreo] = useState("");
+  const [email, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("/api/auth/login", { correo, password });
-      localStorage.setItem("token", res.data.token);
+  e.preventDefault();
+  try {
+    const res = await axios.post("/auth/login", { email, password });
+
+    const { token, claveTemporal, comercioActivo } = res.data;
+    localStorage.setItem("token", token);
+
+    if (claveTemporal) {
+      navigate("/cambiar-password");
+    } else if (!comercioActivo) {
+      navigate("/completar-registro");
+    } else {
       navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Credenciales incorrectas");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Credenciales incorrectas");
+  }
+};
+
 
   return (
     <div className={styles.container}>
@@ -33,7 +43,7 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Correo"
-            value={correo}
+            value={email}
             onChange={(e) => setCorreo(e.target.value)}
             required
           />

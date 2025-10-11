@@ -1,23 +1,44 @@
 import { FormEvent, useState } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
-export default function LlaveForm({ modoRegistroInicial = false }: { modoRegistroInicial?: boolean }) {
+interface LlaveFormProps {
+  modoRegistroInicial?: boolean;
+  onConfigSaved?: () => void; // 👈 callback opcional para refrescar el usuario
+}
+
+export default function LlaveForm({ modoRegistroInicial = false, onConfigSaved }: LlaveFormProps) {
   const [llave, setLlave] = useState("");
   const [emailBancario, setEmailBancario] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleGuardar = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setMensaje("");
+
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "/api/llaves",
+        "api/llaves",
         { valor: llave, emailBancario },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setMensaje("Configuración guardada y comercio activado.");
-    } catch {
-      setMensaje("Error al guardar la configuración.");
+
+      setMensaje("Configuración guardada y comercio activado ✅");
+      setLlave("");
+      setEmailBancario("");
+
+      // 👇 Llama al callback si fue pasado desde el Dashboard
+      if (onConfigSaved) {
+        await onConfigSaved();
+      }
+
+    } catch (error) {
+      console.error("Error al guardar la configuración:", error);
+      setMensaje("❌ Error al guardar la configuración.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,10 +64,16 @@ export default function LlaveForm({ modoRegistroInicial = false }: { modoRegistr
           />
         </>
       )}
-      <button className="bg-green-600 text-white px-4 py-2 rounded">
-        Guardar
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full py-2 rounded text-white ${
+          loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
+        }`}
+      >
+        {loading ? "Guardando..." : "Guardar configuración"}
       </button>
-      {mensaje && <p className="mt-2 text-blue-500">{mensaje}</p>}
+      {mensaje && <p className="mt-3 text-blue-600 text-center">{mensaje}</p>}
     </form>
   );
 }

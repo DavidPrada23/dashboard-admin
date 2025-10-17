@@ -20,7 +20,7 @@ export default function LlaveForm({ modoRegistroInicial = false, onConfigSaved }
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "llaves",
+        "/auth/completar-registro",
         { valor: llave, emailBancario },
         { headers: { Authorization: `Bearer ${token}` } }
       );

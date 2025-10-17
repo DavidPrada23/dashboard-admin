@@ -19,7 +19,7 @@ export default function DashboardPage() {
     try {
       setActualizando(true); // 👈 activa transición
       const token = localStorage.getItem("token");
-      const res = await axios.get("/auth/me", {
+      const res = await axios.get("/comercio/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsuario(res.data);

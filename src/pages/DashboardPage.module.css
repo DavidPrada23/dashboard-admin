@@ -92,3 +92,13 @@
   50% { opacity: 1; }
   100% { opacity: 0.6; }
 }
+
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 2rem;
+}
+

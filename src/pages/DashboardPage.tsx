@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardPage.module.css";
 import DashboardHeader from "../components/DashboardHeader";
+import KpiCard from "../components/KpiCard";
 
 import { Usuario } from "../types/usuario";
 import FormularioVenta from "../components/FormularioVenta";
@@ -77,6 +78,12 @@ export default function DashboardPage() {
         activo={usuario?.activo}
         onLogout={handleLogout}
       />
+      <div className={styles.kpiRow}>
+        <KpiCard icon="💰" label="Ventas Totales" value="$1.250.000" color="#10b981" />
+        <KpiCard icon="🧾" label="Transacciones Hoy" value="48" color="#3b82f6" />
+        <KpiCard icon="📈" label="Monto Promedio" value="$26.000" color="#f59e0b" />
+        <KpiCard icon="👥" label="Clientes Únicos" value="12" color="#8b5cf6" />
+      </div>
 
       {actualizando ? (
         <p className={styles.transitionText}>Cargando tu panel...</p>

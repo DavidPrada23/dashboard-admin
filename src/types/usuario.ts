@@ -1,15 +1,10 @@
 export interface Comercio {
   id: number;
-  nombre?: string;
+  nombre: string;
   activo: boolean;
-  llave_actual?: string | null;
-  email_bancario?: string | null;
+  emailBancario: string;
+  llaveActual: string;
 }
 
-export interface Usuario {
-  id: number;
-  nombre?: string;
-  email?: string;
-  comercio?: Comercio;
-  comercioId?: number;
-}
+export type Usuario = Comercio; // el endpoint /comercio/me devuelve directamente el comercio
+

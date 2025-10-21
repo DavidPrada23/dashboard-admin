@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardPage.module.css";
+import DashboardHeader from "../components/DashboardHeader";
 
-import { Usuario } from "../types/Usuario";
+import { Usuario } from "../types/usuario";
 import FormularioVenta from "../components/FormularioVenta";
 import HistorialVentas from "../components/HistorialVentas";
 import LlaveForm from "../components/LlaveForm";
 import NotificacionVentas from "../components/NotificacionVentas";
 
 export default function DashboardPage() {
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [usuario, setUsuario] = useState<Usuario>();
   const [loading, setLoading] = useState(true);
   const [actualizando, setActualizando] = useState(false); // 👈 NUEVO estado
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function DashboardPage() {
       const res = await axios.get("/comercio/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUsuario(res.data);
+      setUsuario(res.data as Usuario);
     } catch (err) {
       console.error(err);
     } finally {
@@ -44,15 +45,15 @@ export default function DashboardPage() {
 
   // Si el comercio aún no está activo
   if (
-    !usuario?.comercio ||
-    !usuario.comercio.activo ||
-    !usuario.comercio.llave_actual ||
-    !usuario.comercio.email_bancario
+    !usuario ||
+    !usuario.activo ||
+    !usuario.llaveActual ||
+    !usuario.emailBancario
   ) {
     return (
       <div className={styles.container}>
         <div className={styles.headerBar}>
-          <img src="/logo.png" alt="Logo PayB" className={styles.logo} />
+          <img src="../payb-logo.png" alt="Logo PayB" className={styles.logo} />
           <button onClick={handleLogout} className={styles.logoutButton}>Salir</button>
         </div>
 
@@ -69,25 +70,26 @@ export default function DashboardPage() {
 
   // Dashboard principal
   return (
-    <div className={styles.container}>
-      <div className={styles.headerBar}>
-        <img src="/payb-logo.png" alt="Logo PayB" className={styles.logo} />
-        <button onClick={handleLogout} className={styles.logoutButton}>
-          Salir
-        </button>
-      </div>
+    <div className="min-h-screen bg-gray-50 p-6">
+      {/* Cabecera profesional */}
+      <DashboardHeader
+        comercioNombre={usuario?.nombre}
+        activo={usuario?.activo}
+        onLogout={handleLogout}
+      />
 
       {actualizando ? (
         <p className={styles.transitionText}>Cargando tu panel...</p>
       ) : (
         <>
+
           <h1 className={styles.header}>Panel del Comercio</h1>
           <div className={styles.grid}>
             <div className={styles.card}><NotificacionVentas /></div>
             <div className={styles.card}><LlaveForm /></div>
             <div className={styles.card}><FormularioVenta /></div>
             <div className={styles.card}>
-              <HistorialVentas comercioId={usuario.comercioId ? Number(usuario.comercioId) : 0} />
+              <HistorialVentas comercioId={usuario.id} />
             </div>
           </div>
         </>

@@ -1,0 +1,89 @@
+.headerBar {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 45px;
+  object-fit: contain;
+}
+
+.comercioInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.welcomeText {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.welcomeText span {
+  color: #007bff;
+}
+
+.estado {
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  font-weight: 500;
+}
+
+.activo {
+  color: #16a34a; /* verde */
+}
+
+.inactivo {
+  color: #dc2626; /* rojo */
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.settingsButton {
+  background: #f3f4f6;
+  border: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.settingsButton:hover {
+  background: #e5e7eb;
+}
+
+.logoutButton {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease-in-out;
+}
+
+.logoutButton:hover {
+  background: #dc2626;
+}

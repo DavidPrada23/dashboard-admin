@@ -71,24 +71,23 @@ export default function DashboardPage() {
 
   // Dashboard principal
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className={styles.container}>
       {/* Cabecera profesional */}
       <DashboardHeader
         comercioNombre={usuario?.nombre}
         activo={usuario?.activo}
         onLogout={handleLogout}
       />
-      <div className={styles.kpiRow}>
-        <KpiCard icon="💰" label="Ventas Totales" value="$1.250.000" color="#10b981" />
-        <KpiCard icon="🧾" label="Transacciones Hoy" value="48" color="#3b82f6" />
-        <KpiCard icon="📈" label="Monto Promedio" value="$26.000" color="#f59e0b" />
-        <KpiCard icon="👥" label="Clientes Únicos" value="12" color="#8b5cf6" />
-      </div>
-
       {actualizando ? (
         <p className={styles.transitionText}>Cargando tu panel...</p>
       ) : (
         <>
+          <div className={styles.kpiRow}>
+            <KpiCard icon="💰" label="Ventas Totales" value="$1.250.000" color="#10b981" />
+            <KpiCard icon="🧾" label="Transacciones Hoy" value="48" color="#3b82f6" />
+            <KpiCard icon="📈" label="Monto Promedio" value="$26.000" color="#f59e0b" />
+            <KpiCard icon="👥" label="Clientes Únicos" value="12" color="#8b5cf6" />
+          </div>
 
           <h1 className={styles.header}>Panel del Comercio</h1>
           <div className={styles.grid}>

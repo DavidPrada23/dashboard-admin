@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardPage.module.css";
+
 import DashboardHeader from "../components/DashboardHeader";
 import KpiCard from "../components/KpiCard";
+
 import SalesChart from "../components/dashboard/SalesChart";
 import SalesTable from "../components/dashboard/SalesTable";
+
+import Loader from "../components/ui/Loader";
+import Toast from "../components/ui/Toast";
 
 import { Usuario } from "../types/usuario";
 import FormularioVenta from "../components/FormularioVenta";
@@ -15,7 +20,8 @@ import NotificacionVentas from "../components/NotificacionVentas";
 export default function DashboardPage() {
   const [usuario, setUsuario] = useState<Usuario>();
   const [loading, setLoading] = useState(true);
-  const [actualizando, setActualizando] = useState(false); // 👈 NUEVO estado
+  const [actualizando, setActualizando] = useState(false); // 👈 estado de transición
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const fetchUsuario = async () => {
@@ -43,7 +49,7 @@ export default function DashboardPage() {
     navigate("/login");
   };
 
-  if (loading) return <p className={styles.loading}>Cargando dashboard...</p>;
+  if (loading) return <Loader text="Cargando tu panel de comercio..." />;
 
   // Si el comercio aún no está activo
   if (
@@ -100,6 +106,8 @@ export default function DashboardPage() {
           </div>
         </>
       )}
+      {/* Feedback visual (Toast) */}
+      {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage(null)} />}
     </div>
   );
 }

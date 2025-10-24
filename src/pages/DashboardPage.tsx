@@ -5,10 +5,10 @@ import styles from "./DashboardPage.module.css";
 import DashboardHeader from "../components/DashboardHeader";
 import KpiCard from "../components/KpiCard";
 import SalesChart from "../components/dashboard/SalesChart";
+import SalesTable from "../components/dashboard/SalesTable";
 
 import { Usuario } from "../types/usuario";
 import FormularioVenta from "../components/FormularioVenta";
-import HistorialVentas from "../components/HistorialVentas";
 import LlaveForm from "../components/LlaveForm";
 import NotificacionVentas from "../components/NotificacionVentas";
 
@@ -91,15 +91,12 @@ export default function DashboardPage() {
           </div>
 
           <SalesChart />
-
+          <SalesTable />
           <h1 className={styles.header}>Panel del Comercio</h1>
           <div className={styles.grid}>
             <div className={styles.card}><NotificacionVentas /></div>
             <div className={styles.card}><LlaveForm /></div>
             <div className={styles.card}><FormularioVenta /></div>
-            <div className={styles.card}>
-              <HistorialVentas comercioId={usuario.id} />
-            </div>
           </div>
         </>
       )}

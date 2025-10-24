@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./DashboardPage.module.css";
 import DashboardHeader from "../components/DashboardHeader";
 import KpiCard from "../components/KpiCard";
+import SalesChart from "../components/dashboard/SalesChart";
 
 import { Usuario } from "../types/usuario";
 import FormularioVenta from "../components/FormularioVenta";
@@ -88,6 +89,8 @@ export default function DashboardPage() {
             <KpiCard icon="📈" label="Monto Promedio" value="$26.000" color="#f59e0b" />
             <KpiCard icon="👥" label="Clientes Únicos" value="12" color="#8b5cf6" />
           </div>
+
+          <SalesChart />
 
           <h1 className={styles.header}>Panel del Comercio</h1>
           <div className={styles.grid}>

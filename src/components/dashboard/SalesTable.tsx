@@ -28,7 +28,7 @@ export default function SalesTable() {
     const fetchVentas = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("/ventas", {
+        const res = await axios.get("/ventas/historial", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setVentas(res.data);

@@ -18,10 +18,10 @@
 }
 
 .logo {
-  height: 50px;
+  height: 45px;
+  width: auto;
   object-fit: contain;
-  margin: 0 auto;
-  flex: 1;
+  margin-right: 10px;
 }
 
 .logoutButton {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardPage.module.css";
+import paybLogo from "../assets/payb-logo.png";
 
 import DashboardHeader from "../components/DashboardHeader";
 import KpiCard from "../components/KpiCard";
@@ -61,7 +62,7 @@ export default function DashboardPage() {
     return (
       <div className={styles.container}>
         <div className={styles.headerBar}>
-          <img src="../payb-logo.png" alt="Logo PayB" className={styles.logo} />
+          <img src={paybLogo} alt="Logo PayB" className={styles.logo} />
           <button onClick={handleLogout} className={styles.logoutButton}>Salir</button>
         </div>
 

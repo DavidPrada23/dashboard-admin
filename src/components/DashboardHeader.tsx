@@ -1,6 +1,5 @@
-import React from "react";
 import styles from "./DashboardHeader.module.css";
-
+import paybLogo from "../assets/payb-logo.png";
 interface DashboardHeaderProps {
   comercioNombre: string;
   activo: boolean;
@@ -16,7 +15,7 @@ export default function DashboardHeader({
     <header className={styles.headerBar}>
       {/* Logo + nombre */}
       <div className={styles.leftSection}>
-        <img src="/payb-logo.png" alt="Logo PayB" className={styles.logo} />
+        <img src={paybLogo} alt="Logo PayB" className={styles.logo} />
         <div className={styles.comercioInfo}>
           <h1 className={styles.welcomeText}>
             Bienvenido, <span>{comercioNombre}</span>

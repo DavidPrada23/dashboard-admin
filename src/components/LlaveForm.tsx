@@ -91,7 +91,7 @@ export default function LlaveForm({ modoRegistroInicial = false, onConfigSaved }
           onClick={toggleVisibilidad}
           className="absolute right-2 top-2 text-sm text-gray-500 hover:text-gray-800"
         >
-          {llaveVisible ? "🙈 Ocultar" : "👁️ Mostrar"}
+          {llaveVisible ? "Ocultar" : "Mostrar"}
         </button>
       </div>
 

@@ -1,16 +1,23 @@
 import styles from "./DashboardHeader.module.css";
+import { useState } from "react";
 import paybLogo from "../assets/payb-logo.png";
+
+import LlaveForm from "./LlaveForm";
+import FormularioVenta from "./FormularioVenta";
 interface DashboardHeaderProps {
   comercioNombre: string;
   activo: boolean;
   onLogout: () => void;
+  userRole?: string | null;
 }
 
 export default function DashboardHeader({
   comercioNombre,
   activo,
   onLogout,
+  userRole = "USER",
 }: DashboardHeaderProps) {
+  const [showConfig, setShowConfig] = useState(false);
   return (
     <header className={styles.headerBar}>
       {/* Logo + nombre */}
@@ -32,7 +39,35 @@ export default function DashboardHeader({
 
       {/* Botones */}
       <div className={styles.rightSection}>
-        <button className={styles.settingsButton}>Ajustes</button>
+        <button onClick={() => setShowConfig(true)}
+        >
+          ⚙️ Ajustes
+        </button>
+        {/* Modal personalizado */}
+        {showConfig && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modal}>
+              <button
+                className={styles.closeButton}
+                onClick={() => setShowConfig(false)}
+              >
+                ✕
+              </button>
+              <h2 className={styles.modalTitle}>Configuración del Comercio</h2>
+
+              {userRole === "ADMIN" ? (
+                <div className={styles.modalContent}>
+                  <LlaveForm />
+                  <FormularioVenta />
+                </div>
+              ) : (
+                <p className={styles.noPermission}>
+                  No tienes permiso para acceder a esta sección.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
         <button onClick={onLogout} className={styles.logoutButton}>
           Salir
         </button>

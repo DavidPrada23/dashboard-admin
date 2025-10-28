@@ -13,8 +13,9 @@ import SalesTable from "../components/dashboard/SalesTable";
 import Loader from "../components/ui/Loader";
 import Toast from "../components/ui/Toast";
 
+import { getUserRoleFromToken } from "../utils/auth";
+
 import { Usuario } from "../types/usuario";
-import FormularioVenta from "../components/FormularioVenta";
 import LlaveForm from "../components/LlaveForm";
 import NotificacionVentas from "../components/NotificacionVentas";
 
@@ -24,6 +25,7 @@ export default function DashboardPage() {
   const [actualizando, setActualizando] = useState(false); // 👈 estado de transición
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const userRole = getUserRoleFromToken();
 
   const fetchUsuario = async () => {
     try {
@@ -85,6 +87,7 @@ export default function DashboardPage() {
         comercioNombre={usuario?.nombre}
         activo={usuario?.activo}
         onLogout={handleLogout}
+        userRole={userRole}
       />
       {actualizando ? (
         <p className={styles.transitionText}>Cargando tu panel...</p>
@@ -99,11 +102,8 @@ export default function DashboardPage() {
 
           <SalesChart />
           <SalesTable />
-          <h1 className={styles.header}>Panel del Comercio</h1>
           <div className={styles.grid}>
             <div className={styles.card}><NotificacionVentas /></div>
-            <div className={styles.card}><LlaveForm /></div>
-            <div className={styles.card}><FormularioVenta /></div>
           </div>
         </>
       )}

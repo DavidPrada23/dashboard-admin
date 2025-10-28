@@ -5,20 +5,17 @@ import { Client } from "@stomp/stompjs";
 interface Venta {
   producto: string;
   monto: number;
-  // agrega aquí otros campos si es necesario
 }
 
 export default function NotificacionVentas() {
-  const [ventaNueva, setVentaNueva] = useState<Venta | null>(null);
+  const [ventas, setVentas] = useState<Venta[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    // parsear el email del token
     interface JwtPayload {
       sub: string;
-      // agrega aquí otros campos si es necesario
     }
 
     const parseJwt = (token: string): JwtPayload | null => {
@@ -39,8 +36,8 @@ export default function NotificacionVentas() {
       reconnectDelay: 5000,
       onConnect: () => {
         stompClient.subscribe(`/topic/ventas/${email}`, (message) => {
-          const venta = JSON.parse(message.body);
-          setVentaNueva(venta);
+          const venta = JSON.parse(message.body) as Venta;
+          setVentas((prev) => [...prev, venta]);
         });
       },
     });
@@ -48,15 +45,24 @@ export default function NotificacionVentas() {
     stompClient.activate();
 
     return () => {
-      stompClient.deactivate();
+      if (stompClient.active) stompClient.deactivate();
     };
   }, []);
 
-  if (!ventaNueva) return null;
+  const ultimaVenta = ventas[ventas.length - 1];
 
   return (
-    <div className="fixed bottom-4 right-4 bg-green-600 text-white p-4 rounded shadow-lg">
-      Nueva venta: {ventaNueva.producto} por ${ventaNueva.monto}
+    <div className="fixed bottom-4 right-4 bg-white border border-gray-300 p-4 rounded-lg shadow-md min-w-[280px] text-center">
+      {ventas.length > 0 ? (
+        <div className="text-green-700 font-semibold">
+          🛍️ Nueva venta registrada
+          <p className="mt-1 text-gray-700">
+            <strong>{ultimaVenta.producto}</strong> — ${ultimaVenta.monto.toLocaleString()}
+          </p>
+        </div>
+      ) : (
+        <p className="text-gray-500 italic">No se registran ventas</p>
+      )}
     </div>
   );
 }

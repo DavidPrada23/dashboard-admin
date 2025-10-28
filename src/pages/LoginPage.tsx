@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import styles from "./LoginPage.module.css";
+import paybLogo from "../assets/payb-logo.png";
 
 export default function LoginPage() {
   const [email, setCorreo] = useState("");
@@ -34,7 +35,7 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/payb-logo.png" alt="PayB" className={styles.logo} />
+        <img src={paybLogo} alt="PayB" className={styles.logo} />
         <h2 className={styles.title}>Iniciar sesión</h2>
 
         {error && <p className={styles.error}>{error}</p>}

@@ -1,0 +1,83 @@
+.formContainer {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  transition: all 0.2s ease-in-out;
+}
+
+.formContainer:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  outline: none;
+  margin-bottom: 1rem;
+  transition: border 0.2s ease-in-out;
+}
+
+.input:focus {
+  border-color: #2563eb;
+}
+
+.select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #fff;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.button {
+  width: 100%;
+  background-color: #2563eb;
+  color: #ffffff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: #1d4ed8;
+}
+
+.success {
+  text-align: center;
+  color: #10b981;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444;
+  margin-top: 1rem;
+  font-weight: 500;
+}
